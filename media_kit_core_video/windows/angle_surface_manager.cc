@@ -197,7 +197,8 @@ bool ANGLESurfaceManager::InitializeD3D11() {
   auto d3d11_texture2D_desc = D3D11_TEXTURE2D_DESC{0};
   d3d11_texture2D_desc.Width = width_;
   d3d11_texture2D_desc.Height = height_;
-  d3d11_texture2D_desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+  d3d11_texture2D_desc.Format = DXGI_FORMAT_UNKNOWN;
+  //d3d11_texture2D_desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
   d3d11_texture2D_desc.MipLevels = 1;
   d3d11_texture2D_desc.ArraySize = 1;
   d3d11_texture2D_desc.SampleDesc.Count = 1;

@@ -54,6 +54,8 @@ VideoOutput::VideoOutput(int64_t handle,
         {MPV_RENDER_PARAM_INVALID, nullptr},
     };
     // Request H/W decoding. Forcing `dxva2-copy` for now.
+    // https://github.com/mpv-player/mpv/blob/master/DOCS/man/ipc.rst
+    mpv_set_option_string(handle_, "input-ipc-server", "\\\\.\\pipe\\mpvsocket");
     mpv_set_option_string(handle_, "hwdec", "dxva2-copy");
     // Create render context.
     if (mpv_render_context_create(&render_context_, handle_, params) == 0) {
@@ -75,6 +77,8 @@ VideoOutput::VideoOutput(int64_t handle,
   }
   if (!is_hardware_acceleration_enabled) {
     std::cout << "media_kit: VideoOutput: Using S/W rendering." << std::endl;
+    mpv_set_option_string(handle_, "input-ipc-server", "\\\\.\\pipe\\mpvsocket");
+    mpv_set_option_string(handle_, "hwdec", "dxva2-copy");
     // Allocate a "large enough" buffer ahead of time.
     pixel_buffer_ = std::make_unique<uint8_t[]>(SW_RENDERING_PIXEL_BUFFER_SIZE);
     pixel_buffer_texture_ = std::make_unique<FlutterDesktopPixelBuffer>();
